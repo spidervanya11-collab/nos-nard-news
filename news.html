@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101116">
+<title>Обновления — Catch or Die NN 2</title>
+<style>
+:root{
+ --bg:#0c0e13;--panel:rgba(23,26,35,.88);--panel2:#191d27;--text:#f4f5fa;--muted:#a5adbd;
+ --line:rgba(255,255,255,.11);--accent:#8c7bff;--accent2:#35d6df;--shadow:0 18px 55px rgba(0,0,0,.22);
+ --page:linear-gradient(135deg,#0b0d14,#111522 48%,#0d1119);
+}
+:root[data-theme="light"]{
+ --bg:#f2f4fb;--panel:rgba(255,255,255,.88);--panel2:#fff;--text:#202436;--muted:#687187;
+ --line:rgba(37,43,67,.13);--accent:#6250d8;--accent2:#078f9b;--shadow:0 18px 55px rgba(37,43,67,.09);
+ --page:linear-gradient(135deg,#f7f8ff,#e9edff 48%,#f9f0ff);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--page);color:var(--text);font:15px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .3s,color .3s;position:relative;isolation:isolate}
+body:before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,rgba(117,88,255,.27),transparent 31%),radial-gradient(ellipse at 83% 26%,rgba(42,201,213,.19),transparent 30%),radial-gradient(ellipse at 55% 80%,rgba(224,80,166,.15),transparent 32%);filter:blur(28px);animation:glow 18s ease-in-out infinite alternate}
+@keyframes glow{from{transform:translate(-1%,0) scale(1)}to{transform:translate(2%,2%) scale(1.08)}}
+a{color:inherit}
+.wrap{width:min(100% - 32px,1000px);margin:auto;padding:28px 0 48px}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:48px}
+.logo{width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--panel);display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:var(--shadow)}
+.brand{font-weight:800;letter-spacing:.02em;line-height:1.2}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;margin-top:5px}
+.spacer{flex:1}
+.theme{border:1px solid var(--line);border-radius:999px;padding:10px 14px;background:var(--panel);color:var(--text);font:inherit;font-size:12px;font-weight:750;cursor:pointer}
+.hero{padding:0 0 28px;max-width:760px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);font-weight:800;margin-bottom:14px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;letter-spacing:-.055em;margin:0 0 18px}
+.hero p{color:var(--muted);max-width:620px;margin:0;font-size:15px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:11px;margin-top:22px;background:var(--panel)}
+.dot{width:7px;height:7px;border-radius:50%;background:#49d9a4;box-shadow:0 0 12px #49d9a477}
+.section-head{display:flex;align-items:center;gap:14px;margin:24px 0 16px}
+.section-head h2{font-size:16px;letter-spacing:.08em;margin:0}.section-head span{height:1px;background:var(--line);flex:1}
+.posts{display:grid;gap:16px}
+.post{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(14px);border-radius:20px;padding:24px;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
+.post:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.post-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.badge{font-size:10px;font-weight:850;letter-spacing:.09em;border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:5px 9px;color:var(--accent2)}
+.date{font-size:12px;color:var(--muted)}
+.post h3{font-size:clamp(20px,3vw,26px);line-height:1.2;letter-spacing:-.03em;margin:0 0 10px}
+.post p{color:var(--muted);margin:0 0 14px}
+.post ul{margin:0;padding-left:20px}.post li{padding:3px 0}
+.post li::marker{color:var(--accent)}
+.post-foot{display:flex;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);margin-top:18px;padding-top:14px;color:var(--muted);font-size:11px;flex-wrap:wrap}
+.empty{display:none;border:1px dashed var(--line);border-radius:18px;padding:25px;color:var(--muted);text-align:center}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:32px;color:var(--muted);font-size:11px}
+@media(max-width:600px){.wrap{padding-top:20px}.topbar{margin-bottom:36px}.post{padding:19px}.hero p{font-size:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <nav class="topbar" aria-label="Шапка сайта">
+    <div class="logo" aria-hidden="true">C</div>
+    <div class="brand">CATCH OR DIE NN 2<small>НОВОСТИ ОБНОВЛЕНИЙ</small></div>
+    <div class="spacer"></div>
+    <button class="theme" id="themeToggle" type="button">☀️ Светлая тема</button>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Новости игры</div>
+    <h1>Каждое обновление.<br>Все важные детали.</h1>
+    <p>Следи за новыми возможностями, изменениями и исправлениями Catch or Die NN 2. Здесь публикуются новости игровых обновлений.</p>
+    <div class="hero-tag"><span class="dot"></span> Новости и патчноуты</div>
+  </header>
+
+  <div class="section-head"><h2>ПОСЛЕДНИЕ ОБНОВЛЕНИЯ</h2><span></span></div>
+  <section class="posts" id="posts" aria-label="Список обновлений">
+    <!--
+      КАК ДОБАВЛЯТЬ НОВОСТЬ:
+      1. Скопируй целиком один блок <article class="post"> ... </article>.
+      2. Вставь его ВЫШЕ остальных новостей внутри <section id="posts">.
+      3. Измени дату, версию, заголовок, описание и список изменений.
+      4. Сохрани index.html и снова загрузи сайт на Netlify.
+    -->
+    <article class="post">
+      <div class="post-top"><span class="badge">Новое обновление</span><time class="date" datetime="2026-01-12">1 декабря 2026</time></div>
+      <h3>Глобальное обновление</h3>
+      <p>Список изменений:</p>
+      <ul>
+<li>Новые фоны.</li>
+<li>Новое звуковое сопровождение.</li>
+<li>Новая кнопка "Мини-игры".</li>
+<li>Новый - 11 сезон Catch Pass</li>
+<li>6 новых скинов: Гарри Поттер, Гермиона Грейнджер,
+Рон Уизли, Рубеус Хагрид, Альбус Дамблдор, Добби,
+Волан-Де-Морт.</li>
+<li>Добавлен новый лут-бокс с 44 скинами. Он находится
+на второй странице лут-боксов.</li>
+<li>Появились отдельные сайты: Службы поддержки, Новостей,
+Доната, Шансов на скины в лут-боксах.</li>
+<li>Добавлено 8000 новых промокодов.</li>
+<li>В меню "Промокод" изменена плашка для ввода промокода.</li>
+<li>В меню "Промокод" добавлена плашка с балансом NN coins.</li>
+<li>Топ - Дропы покинули игру, а скины лимитированной редкости
+стали легендарными.</li>
+<li>Функция "Темная тема" - остается в игре, но теперь работает
+стабильно.</li>
+<li>Добавлена новая система "Ранги". Ранги у скинов - не общие,
+у каждого скина - свой ранг. На данный момент, в игре существует 16 рангов.</li>
+<li>Таблица необходимого количества очков
+для перехода с одного ранга на другой:</li>
+
+<li>200,  Ранг 1 -> 2</li>
+<li>500,  Ранг 2 -> 3</li>
+<li>1000, Ранг 3 -> 4</li>
+<li>2000, Ранг 4 -> 5</li>
+<li>4000, Ранг 5 -> 6</li>
+<li>7000, Ранг 6 -> 7</li>
+<li>11000,Ранг 7 -> 8</li>
+<li>16000,Ранг 8 -> 9</li>
+<li>22000,Ранг 9 -> 10</li>
+<li>29000,Ранг 10 -> 11</li>
+<li>37000,Ранг 11 -> 12</li>
+<li>46000,Ранг 12 -> 13</li>
+<li>56000,Ранг 13 -> 14</li>
+<li>67000,Ранг 14 -> 15</li>
+<li>79000 Ранг 15 -> 16</li>
+
+<li>Награды (количество NN coins), выдаваемые за получение нового ранга. Таблица:</li>
+<li>Ранг 2 - 10 NN coins</li>
+<li>Ранг 3 - 20 NN coins</li>
+<li>Ранг 4 - 30 NN coins</li>
+<li>Ранг 5 - 100 NN coins</li>
+<li>Ранг 6 - 400 NN coins</li>
+<li>Ранг 7 - 700 NN coins</li>
+<li>Ранг 8 - 900 NN coins</li>
+<li>Ранг 9 - 1010 NN coins</li>
+<li>Ранг 10 - 1020 NN coins</li>
+<li>Ранг 11 - 1030 NN coins</li>
+<li>Ранг 12 - 1040 NN coins</li>
+<li>Ранг 13 - 1080 NN coins</li>
+<li>Ранг 14 - 1090 NN coins</li>
+<li>Ранг 15 - 2000 NN coins</li>
+<li>Ранг 16 - 2500 NN coins</li>
+
+<li>Как считаются очки для получения нового ранга: один - любой пойманный положительный
+объект = 1 очку.</li>
+
+<li>Новая коллекция скинов - Гарри Поттер.</li>
+<li>Временный скин "Снеговик", был заменён на скин "Добби", он будет стоить 1 NN coins
+до конца февраля, успейте его купить до повышения цены.</li>
+
+<li>Изменен объект "Подписка", "Дизлайк" и "Хэштег".</li>
+<li>Изменена иконка игры.</li>
+<li>Изменена начальная заставка игры. </li>
+
+<li>В игру добавлена новая система "Щит". Как она работает: 
+щит появляется после каждых набранных 50 очков, он действует в течении
+10 секунд и защищает от отписок и дизлайков. </li>
+
+<li>Изменена система "Магнит". Теперь он работает как отдельный игровой объект.
+Он появляется каждые набранные 150 очков, и действует в течении 15 секунд, притягивая 
+к игроку лайки и подписки из видимой зоны.</li>
+
+<li>Добавлена новая система "Боссы". Пока что в игре есть только 4 босса:
+Легкий, средний, сложный и ультра босс.
+Боссы появляются один раз в минуту. Сложность босса выбирается абсолютно случайно.
+Каждый босс пролетает несколько раз слева направо, во время полёта стреляет шариками,
+которые либо снимают очки игроку, если тот не сбил шары, либо прибавляют очки, в случае сбития.
+Для того чтобы сбить шар, достаточно по нему нажать.</li>
+<li>Таблица очков:</li>
+<li>В случает сбития шара:</li>
+<li>Легкий босс - +5 очков</li>
+<li>Средний босс - +10 очков</li>
+<li>Сложный босс - +15 очков</li>
+<li>Ультра босс босс - +30 очков</li>
+<li>Количество снимаемых очков, в случае если игрок не сбил шар - будет таким же.</li>
+
+
+<li>Новая система "Мини-игры", в них можно заработать либо дополнительные NN coins,
+либо игровые очки, которые потом также можно обменять на NN coins, на данный момент
+в игре есть 4 мини-игры: Депная, Кликер, Шары и Пятнашки.</li>
+
+<li>Новая мини-игра "Депная": В этой игре вы можете поставить определенное 
+количество NN coins (начиная от 50), на множители: 1.5x, 2x и 3x. В случае
+победы - вы получите определенное количество NN coins, которые вы заработали. В 
+случае проигрыша - вы ничего не получите.</li>
+
+<li>Наша любимая мини-игра "Кликер" - теперь постоянная игра, которая была переработана.
+Суть такая же: нажимаете на монетку, она переворачивается, вам начисляются очки.
+Но теперь эти очки можно обменять на NN coins (курс обмена смотрите в игре).</li>
+
+<li>Вместе с ивентом, который посвящен легендарному "Гарри Поттеру", мы выпускаем нашу третью
+мини - игру. Суть простая: на экране летят шары - синие и красные. 
+Синие - дают 1 очко, красные -2 очка. Советуем не ловить красные шары, чтобы не проиграть.
+Эти очки также можно обменять на NN coins (курс обмена смотрите в игре).</li>
+
+<li>Наша четвертая мини-игра "Пятнашки". Самые классические пятнашки. Задача: собрать все 15 
+чисел по рядам, награда за одну победу - 5 NN coins. При желании пятнашки можно перемешать.</li>
+
+
+<li>Исправлены баги:</li>
+<li>Все скины, которые неправильно поворачивались при движении - были отредактированы.</li>
+<li>Была немного изменена модель скина "Хэллоуинский Nos Nard".</li>
+<li>Некоторые скины были отредактированы по высоте, так как в прошлой версии они могли частично
+вылезать за пределы экрана.</li>
+<li>Скины больше не переворачивается при прыжке.</li>
+<li>Исправлен самый главный баг игры, которые существовал в игре много лет:
+теперь объекты не могут спавниться в текстурах друг друга.</li>
+
+<li>Промокод в честь выхода ГЛОБАЛЬНОГО обновления - на 1000 NN coins: "global"</li>
+      </ul>
+      <div class="post-foot"><span>Catch or Die NN 2</span><span>Версия: 3.0.0</span></div>
+    </article>
+
+    <article class="post">
+      <div class="post-top"><span class="badge">АРХИВ</span><time class="date" datetime="2026-09-30">11 ноября 2025</time></div>
+      <h3>Предыдущее обновление</h3>
+      <p>Список изменений:</p>
+      <ul>
+<li>Скидки 30% на все лут-боксы (на некоторые 50%)</li>
+<li>Изменена кнопка выбора - галочка.</li>
+<li>Изменена кнопка влево и вправо.</li>
+<li>Полный редизайн магазина.</li>
+<li>Промокод в честь прохождения события - hoa1 и hoa2</li>
+<li>Кнопка "Прыжок" немного изменена в дизайне, а также 
+в скором времени она будет переработана.</li>
+<li>Редизайн скина "Хэллоуинский Дима".</li>
+<li>Изменена моделька NN coins.</li>
+<li>Изменён задний зелёный фон, на котором показываются NN coins.</li>
+<li>Редизайн лут-боксов.</li>
+<li>Ивент закончился - меню кликера убрано, но очень скоро будет новый ивент, с новой системой).</li>
+<li>Скидка 50% на "Редкий" и "Мажор" лут-бокс.</li>
+<li>Добавлена плашка - сколько % скидка на каждый лут-бокс.</li>
+      </ul>
+      <div class="post-foot"><span>Catch or Die NN 2</span><span>Версия: 2.9.91</span></div>
+    </article>
+  </section>
+  <div class="empty" id="empty">Пока нет новостей.</div>
+
+  <footer><span>© Catch or Die NN 2</span><span>Новости обновлений • NN GAME</span></footer>
+</main>
+<script>
+(() => {
+ const root=document.documentElement,button=document.getElementById('themeToggle');
+ let saved='dark';try{saved=localStorage.getItem('codnn2-news-theme')||'dark'}catch(e){}
+ function apply(theme){const light=theme==='light';if(light)root.setAttribute('data-theme','light');else root.removeAttribute('data-theme');button.textContent=light?'🌙 Тёмная тема':'☀️ Светлая тема';try{localStorage.setItem('codnn2-news-theme',theme)}catch(e){}}
+ apply(saved);button.addEventListener('click',()=>apply(root.getAttribute('data-theme')==='light'?'dark':'light'));
+})();
+</script>
+</body>
+</html>
